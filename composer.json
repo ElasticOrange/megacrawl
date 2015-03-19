@@ -8,6 +8,7 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "guzzlehttp/guzzle": "~5.0@dev"
+        "guzzlehttp/guzzle": "~5.0@dev",
+        "sunra/php-simple-html-dom-parser": "dev-master"
     }
 }

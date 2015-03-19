@@ -11,4 +11,5 @@ echo $response->getStatusCode(), "\n";
 echo $response->getEffectiveUrl();
 // 'https://github.com/'
 $body = $response->getBody();
+//ob_start();
 echo $body;
