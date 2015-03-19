@@ -6,10 +6,7 @@ use GuzzleHttp\Client;
 $client = new Client();
 
 $response = $client->get('http://emag.ro');
-echo $response->getStatusCode(), "\n";
-// 200
-echo $response->getEffectiveUrl();
-// 'https://github.com/'
+echo $response->getStatusCode(); // 200
+echo $response->getEffectiveUrl(); // 'https://github.com/'
 $body = $response->getBody();
-//ob_start();
-echo $body;
+return $body;
