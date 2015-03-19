@@ -1,13 +1,23 @@
 <?php
-//require 'vendor/sunra/autoload.php';
 
-//require 'first.php';
+require 'vendor/autoload.php';
 use Sunra\PhpSimple\HtmlDomParser;
 
-$str = "http://emag.ro";
-$dom = HtmlDomParser::str_get_html($str);
+// // Create DOM from URL
+// $html = file_get_html('http://www.emag.ro');
 
+// // Find all article blocks
+// foreach($html->find('div.article') as $article) {
+//     $item['title']     = $article->find('div.title', 0)->plaintext;
+//     $item['intro']    = $article->find('div.intro', 0)->plaintext;
+//     $item['details'] = $article->find('div.details', 0)->plaintext;
+//     $articles[] = $item;
+// }
+
+// print_r($articles);
+
+$dom = HtmlDomParser::file_get_html( "http://emag.ro" );
 foreach($dom->find('a') as $element)
 {
-	echo $element->href.'<br>';
+	echo ($element->href."\n");
 }
