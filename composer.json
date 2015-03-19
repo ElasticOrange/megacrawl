@@ -1,0 +1,13 @@
+{
+    "name": "mikes/megacrawl",
+    "authors": [
+        {
+            "name": "mihaibarbu",
+            "email": "xwave21@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "guzzlehttp/guzzle": "~5.0@dev"
+    }
+}
