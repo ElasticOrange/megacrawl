@@ -30,3 +30,14 @@ function checkUrl($link)
 		}
 	}
 }
+
+function checkPagination($stringToCheck)
+{	
+	$dom = HtmlDomParser::file_get_html( $stringToCheck );
+	foreach($dom->find('div#products-holder') as $elements)
+	{
+		foreach ($elements->find('a') as $element) {
+			return $element->href;
+		}
+	}
+}
