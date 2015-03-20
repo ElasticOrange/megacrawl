@@ -3,7 +3,7 @@
 require 'vendor/autoload.php';
 use Sunra\PhpSimple\HtmlDomParser;
 
-/*
+
 function checkPagination($stringToCheck)
 {	
 	$dom = HtmlDomParser::file_get_html( $stringToCheck );
@@ -11,11 +11,14 @@ function checkPagination($stringToCheck)
 	{
 		foreach ($elements->find('a') as $element) 
 			{
-				echo $element->href."\n";
+				$pages = checkUrl($element->href)."\n";
+				echo $pages;
 			}
 	}
 }
-*/
+
+$test = "http://www.emag.ro/televizoare/promotii/filter/smart-tv-f374,smart-tv-3d-v9406/p2/c";
+echo checkPagination($test);
 
 // $test = "http://www.emag.ro/televizoare-accesorii/l";
 // if (checkPagination($test) == 0) 
@@ -24,24 +27,26 @@ function checkPagination($stringToCheck)
 // 	# code...
 // }
 
-$test = [
-	  "1" => "soundbar-curbat-samsung-hw-h7500-320w-subwoofer-wireless-bluetooth-negru-hw-h7500-en/pd/D5KS6BBBM/?ref=prod-widget_3_7_9&recid=HSTR"
-	, "3" => "/oglinda-cosmetica-iluminata-laica-md6051/pd/DFS3GBBBM/?ref=prod-widget_3_7_10&recid=HSTR"
-	, "5" => "https://www.emag.ro/telefon-mobil-allview-dual-sim-black-p7-xtreme/pd/DZBXCBBBM/?ref=prod-widget_3_7_11&recid=HSTR"
-	, "7" => "http://gica.ro/trusa-de-bigudiuri-electrice-remington-20-bigudiuri-catifea-kf-20i/pd/E99L7BBBM/?ref=prod-widget_3_7_12&recid=HSTR"
-	, "8" => "http://www.emag.ro/laptopuri/c"
-	, "9" => "javascript"
-	, "10" => "www.microsoft.com"
-	, "11" => "www.google.ro"
-	, "12" => "https://www.microsoft.ro"
-	, "13" => "https://microsoft.com"
-	, "14" => "mozilla"
 
-];
-foreach ($test as $key => $value) {
-	# code...
-	echo checkUrl($value)."\n";
-}
+
+// $test = [
+// 	  "1" => "soundbar-curbat-samsung-hw-h7500-320w-subwoofer-wireless-bluetooth-negru-hw-h7500-en/pd/D5KS6BBBM/?ref=prod-widget_3_7_9&recid=HSTR"
+// 	, "3" => "/oglinda-cosmetica-iluminata-laica-md6051/pd/DFS3GBBBM/?ref=prod-widget_3_7_10&recid=HSTR"
+// 	, "5" => "https://www.emag.ro/telefon-mobil-allview-dual-sim-black-p7-xtreme/pd/DZBXCBBBM/?ref=prod-widget_3_7_11&recid=HSTR"
+// 	, "7" => "http://gica.ro/trusa-de-bigudiuri-electrice-remington-20-bigudiuri-catifea-kf-20i/pd/E99L7BBBM/?ref=prod-widget_3_7_12&recid=HSTR"
+// 	, "8" => "http://www.emag.ro/laptopuri/c"
+// 	, "9" => "javascript"
+// 	, "10" => "www.microsoft.com"
+// 	, "11" => "www.google.ro"
+// 	, "12" => "https://www.microsoft.ro"
+// 	, "13" => "https://microsoft.com"
+// 	, "14" => "mozilla"
+
+// ];
+// foreach ($test as $key => $value) {
+// 	# code...
+// 	echo checkUrl($value)."\n";
+// }
 
 
 function checkUrl($link)
@@ -72,6 +77,8 @@ function checkUrl($link)
 		}
 	}
 }
+
+
 
 // foreach ($test as $key => $link) 
 // {

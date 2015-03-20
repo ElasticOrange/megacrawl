@@ -6,15 +6,21 @@ use Sunra\PhpSimple\HtmlDomParser;
 $dom = HtmlDomParser::file_get_html( "http://emag.ro" );
 foreach($dom->find('a') as $element)
 {
-	//echo ($element->href."\n");
-	$links[] = checkUrl($element->href);
-}
-	//print_r($links);
-	foreach ($links as $key => $link) 
+	$newlink = checkUrl($element->href);
+	if($newlink)
 	{
-		checkPagination($link);
-		//var_dump($link);
+		$links[$newlink] = true;
 	}
+}
+//print_r($links);
+
+
+foreach ($links as $key => $link) 
+{
+	echo checkPagination($key);
+	//var_dump($link);
+}
+
 
 
 function checkUrl($link)
@@ -48,11 +54,12 @@ function checkUrl($link)
 
 function checkPagination($stringToCheck)
 {	
+	sleep(2);
 	$dom = HtmlDomParser::file_get_html( $stringToCheck );
-	foreach($dom->find('div#products-holder') as $elements)
+	foreach($dom->find('div.listing-pagination') as $elements)
 	{
 		foreach ($elements->find('a') as $element) {
-			echo $element->href."\n";
+			return $element->href."\n";
 		}
 	}
 }
