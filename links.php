@@ -16,8 +16,30 @@ use Sunra\PhpSimple\HtmlDomParser;
 
 // print_r($articles);
 
-$dom = HtmlDomParser::file_get_html( "http://emag.ro" );
-foreach($dom->find('a') as $element)
-{
-	echo ($element->href."\n");
-}
+// $dom = HtmlDomParser::file_get_html( "http://emag.ro" );
+// foreach($dom->find('a') as $element)
+// {
+// 	//echo ($element->href."\n");
+// 	$links = [ $element->href];
+// 	//var_dump($links);
+// 	foreach ($links as $link) 
+// 	{
+// 	}
+	
+// }	
+		$link = "http://www.emag.ro/laptopuri-accesorii/l?ref=menu_link_1_2";
+		$html = HtmlDomParser::file_get_html($link);
+		foreach($html->find('a') as $element)
+		{
+			echo ($element->href."\n");
+			$links = [ $element->href];
+			var_dump($links);
+		}
+		// foreach ($html->find('id') as $pagina) 
+		// {
+		// 	//$item['details'] = $article->find('id.products-holder', 0)->plaintext;
+		// 	// $pagina[] = $item;
+		// 	$pagina_produse['details'] = $pagina->find('id.products-holder', 0)->plaintext;
+		// 	$pagini[] = $pagina_produse;
+		// 	var_dump($pagini);
+		// }
