@@ -6,5 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Sunra\\PhpSimple\\HtmlDomParser' => array($baseDir . '/Src'),
+    'Sunra\\PhpSimple\\HtmlDomParser' => array($baseDir . '/Src', $vendorDir . '/sunra/php-simple-html-dom-parser/Src'),
 );
