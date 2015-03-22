@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9225efbe0534f26ee93bb03d7a6ed6f8",
+    "hash": "d9ed251487fa7e9059c1718385a95569",
     "packages": [
         {
             "name": "guzzlehttp/ringphp",
@@ -152,6 +152,51 @@
             "time": "2014-12-30 13:32:42"
         },
         {
+            "name": "simplon/mysql",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fightbulc/simplon_mysql.git",
+                "reference": "7ea5c50626917885c639a43a0794df10ba73c6a0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fightbulc/simplon_mysql/zipball/7ea5c50626917885c639a43a0794df10ba73c6a0",
+                "reference": "7ea5c50626917885c639a43a0794df10ba73c6a0",
+                "shasum": ""
+            },
+            "require": {
+                "ext-pdo": "*",
+                "php": ">=5.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Simplon\\Mysql\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tino Ehrich",
+                    "email": "tino@bigpun.me",
+                    "role": "developer"
+                }
+            ],
+            "description": "Simplon MySQL Library",
+            "homepage": "https://github.com/fightbulc/simplon_mysql",
+            "keywords": [
+                "db",
+                "manager",
+                "mysql",
+                "pdo"
+            ],
+            "time": "2015-02-15 13:38:50"
+        },
+        {
             "name": "sunra/php-simple-html-dom-parser",
             "version": "v1.5.0",
             "source": {
@@ -198,7 +243,9 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "simplon/mysql": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

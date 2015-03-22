@@ -12,15 +12,31 @@ foreach($dom->find('a') as $element)
 		$links[$newlink] = true;
 	}
 }
-//print_r($links);
 
 
 foreach ($links as $key => $link) 
 {
 	echo checkPagination($key);
-	//var_dump($link);
 }
 
+
+function checkPagination($stringToCheck)
+{	
+	sleep(2);
+	$dom = HtmlDomParser::file_get_html( $stringToCheck );
+	foreach($dom->find('div.listing-pagination') as $elements)
+	{
+		foreach ($elements->find('a') as $element) {
+			return $element->href."\n";
+            $newlink = checkUrl($element->href);
+            if($newlink)
+            {
+                $links[$newlink] = true;
+            }
+            return $links;
+		}
+	}
+}
 
 
 function checkUrl($link)
@@ -48,18 +64,6 @@ function checkUrl($link)
 		else
 		{
 			return ("http://www.emag.ro/".$link);
-		}
-	}
-}
-
-function checkPagination($stringToCheck)
-{	
-	sleep(2);
-	$dom = HtmlDomParser::file_get_html( $stringToCheck );
-	foreach($dom->find('div.listing-pagination') as $elements)
-	{
-		foreach ($elements->find('a') as $element) {
-			return $element->href."\n";
 		}
 	}
 }
