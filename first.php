@@ -17,23 +17,25 @@ foreach($dom->find('a') as $element)
 foreach ($links as $key => $link) 
 {
 	echo checkPagination($key);
+	//var_dump(checkPagination($key));
+	//exit;
 }
 
 
 function checkPagination($stringToCheck)
 {	
-	sleep(2);
+	sleep(3);
+
 	$dom = HtmlDomParser::file_get_html( $stringToCheck );
 	foreach($dom->find('div.listing-pagination') as $elements)
 	{
 		foreach ($elements->find('a') as $element) {
-			return $element->href."\n";
             $newlink = checkUrl($element->href);
             if($newlink)
             {
                 $links[$newlink] = true;
+                echo $newlink."\n";
             }
-            return $links;
 		}
 	}
 }
@@ -41,18 +43,19 @@ function checkPagination($stringToCheck)
 
 function checkUrl($link)
 {
-	if((substr($link, 0, 18) == "http://www.emag.ro") || (substr($link, 0, 19) == "https://www.emag.ro")) 
+	if((substr($link, 0, 18) == "http://www.emag.ro")) 
 	{
 	   return $link;
 	}
-	else if((substr($link, 0, 18) !== "http://www.emag.ro") || (substr($link, 0, 19) !== "https://www.emag.ro"))
+	else if((substr($link, 0, 18) !== "http://www.emag.ro"))
 	{
 		if(
 			   (substr($link, 0, 10) === "javascript") 
 			|| (substr($link, 0, 7) === "http://")
 			|| (strpos($link, 'microsoft') !== false) 
 			|| (strpos($link, 'google') !== false) 
-			|| (strpos($link, 'mozilla') !== false) 
+			|| (strpos($link, 'mozilla') !== false)
+			|| (strpos($link, 'https') !== false) 
 				)
 		{
 			return false;
