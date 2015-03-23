@@ -11,6 +11,7 @@ foreach($dom->find('a') as $element)
 	{
 		$links[$newlink] = true;
 	}
+	echo $newlink;
 }
 
 

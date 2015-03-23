@@ -1,10 +1,12 @@
 <?php
 
 require 'vendor/autoload.php';
+require 'init.php';
 use Sunra\PhpSimple\HtmlDomParser;
 use GuzzleHttp\Client;
 
 //$linkToCheck = 'http://www.emag.ro/carti/promotii/filter/gen-f1195,beletristica-v-314847/c';
+
 
 function checkPagination($stringToCheck)
 {	
@@ -24,8 +26,9 @@ function checkPagination($stringToCheck)
             if($newlink)
             {
                 $links[$newlink] = true;
-                echo $newlink."\n";
             }
+            return $newlink;
+
 		}
 	}
 }
@@ -52,10 +55,19 @@ foreach ($test as $key => $value)
 {
 	echo checkPagination($key);
 	//var_dump(checkPagination($key));
+	$data = array(
+	        'links' => $key,
+	        //'statecheck'  => 0,
+	);
+
+	$sqlBuilder = (new \Simplon\Mysql\Manager\SqlQueryBuilder())
+	    ->setTableName('emag')
+	    ->setData($data);
+
+	$result = $sqlManager->insert($sqlBuilder);
+
+	//var_dump($result); // [50, 51, ...] || false
 }
-
-// echo checkPagination($test);
-
 
 
 
