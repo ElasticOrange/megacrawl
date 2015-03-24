@@ -23,6 +23,7 @@ foreach ($links as $key => $value)
 	addLinksFromHomepageToDb($value, $sqlManager);
 }
 
+// linkurile extrase din navbar-ul main page sunt inserate in tabela
 function addLinksFromHomepageToDb($stringToCheck, $sqlManager)
 {
 	$data = array(
@@ -62,7 +63,6 @@ do {
 		->setData($data);
 
 		$update = $sqlManager->update($sqlBuilder);
-		print_r($update);
 
 		if ((isCategory($select['links'], $sqlManager)) !== true)
 		{
@@ -78,7 +78,6 @@ do {
 			addPaginationLinksToDb($select['links'], $sqlManager);
 		}
 		
-		
 		$data = array(
 		'statecheck' => '2',
 		);
@@ -92,10 +91,6 @@ do {
 		->setData($data);
 
 		$update = $sqlManager->update($sqlBuilder);
-		print_r($update);
-		
-
-		exit;
 	} while ($select);
 
 
