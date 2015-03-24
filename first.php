@@ -25,7 +25,7 @@ foreach ($links as $key => $link)
 
 function checkPagination($stringToCheck)
 {	
-	sleep(3);
+	sleep($t);
 
 	$dom = HtmlDomParser::file_get_html( $stringToCheck );
 	foreach($dom->find('div.listing-pagination') as $elements)

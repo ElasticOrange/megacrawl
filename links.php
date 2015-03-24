@@ -10,7 +10,7 @@ use GuzzleHttp\Client;
 
 function checkPagination($stringToCheck)
 {	
-	sleep(3);
+	sleep($t);
 
 	// $client = new Client();
 	// $response = $client->get($stringToCheck);
