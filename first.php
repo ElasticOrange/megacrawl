@@ -3,42 +3,36 @@ require 'vendor/autoload.php';
 
 use Sunra\PhpSimple\HtmlDomParser;
 
-$dom = HtmlDomParser::file_get_html( "http://emag.ro" );
-foreach($dom->find('a') as $element)
-{
-	$newlink = checkUrl($element->href);
-	if($newlink)
-	{
-		$links[$newlink] = true;
-	}
-	echo $newlink;
+$tests = 
+[
+	'http://www.emag.ro/petshop/l',
+	'http://www.emag.ro/laptopuri-accesorii/l',
+];
+
+foreach ($tests as $test) {
+	# code...
+	print_r(checkCategory($test));
 }
 
+//print_r(checkCategory('http://www.emag.ro/petshop/l'));
 
-foreach ($links as $key => $link) 
-{
-	echo checkPagination($key);
-	//var_dump(checkPagination($key));
-	//exit;
-}
-
-
-function checkPagination($stringToCheck)
+function checkCategory($stringToCheck)
 {	
-	sleep($t);
-
+	sleep(5);
 	$dom = HtmlDomParser::file_get_html( $stringToCheck );
-	foreach($dom->find('div.listing-pagination') as $elements)
+	foreach($dom->find('span.category-sidebar') as $elements)
 	{
-		foreach ($elements->find('a') as $element) {
+		foreach ($elements->find('a') as $element) 
+		{
             $newlink = checkUrl($element->href);
             if($newlink)
             {
                 $links[$newlink] = true;
-                echo $newlink."\n";
             }
 		}
+        //print_r($newlink)."\n";
 	}
+	return $links;
 }
 
 
@@ -48,7 +42,11 @@ function checkUrl($link)
 	{
 	   return $link;
 	}
-	else if((substr($link, 0, 18) !== "http://www.emag.ro"))
+	else if(substr($link, 0, 14) == "http://emag.ro")
+	{
+		return $link;
+	}
+	else if((substr($link, 0, 18) !== "http://www.emag.ro") || (substr($link, 0, 18) !== "http://emag.ro"))
 	{
 		if(
 			   (substr($link, 0, 10) === "javascript") 

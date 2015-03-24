@@ -1,6 +1,5 @@
 <?php
 require 'init.php';
-
 use Sunra\PhpSimple\HtmlDomParser;
 
 // este parsata prima pagina si se extrag linkurile din navbar-ul main page
@@ -15,19 +14,19 @@ foreach($dom->find('nav#emg-mega-menu') as $elements)
             $links[$newlink] = true;
         }
 	}
-	return $links;
 }
 
 foreach ($links as $key => $value) 
 {
-	addLinksFromHomepageToDb($value, $sqlManager);
+	addLinksFromHomepageToDb($key, $sqlManager);
 }
 
+
 // linkurile extrase din navbar-ul main page sunt inserate in tabela
-function addLinksFromHomepageToDb($stringToCheck, $sqlManager)
+function addLinksFromHomepageToDb($url, $sqlManager)
 {
 	$data = array(
-		        'links' => $newlink,
+		        'links' => $url,
 		        'statecheck'  => '0',
 		);
 
@@ -40,7 +39,7 @@ function addLinksFromHomepageToDb($stringToCheck, $sqlManager)
 
 
 do {
-		// functia de select 1 row
+		// select 1 row from table where statecheck = 0
 		$sqlBuilder = new \Simplon\Mysql\Manager\SqlQueryBuilder();
 		$sqlBuilder
 		->setQuery('SELECT * FROM emag WHERE statecheck = :statecheck')
@@ -49,7 +48,7 @@ do {
 
 		print_r($select);
 			
-		// functia de update
+		// change statecheck to 1
 		$data = array(
 		'statecheck' => '1',
 		);
@@ -64,19 +63,21 @@ do {
 
 		$update = $sqlManager->update($sqlBuilder);
 
-		if ((isCategory($select['links'], $sqlManager)) !== true)
+		// daca este categorie se adauga in tabela
+		// daca este lista se extrag categoriile si se adauga in tabela
+		if ((isCategory($select['links'])) !== true)
 		{
-			$hasPagination = checkCategory($select['links'], $sqlManager);
-			
+			$hasPagination = checkCategory($select['links']);
 			foreach ($hasPagination as $key => $value) 
 			{
-				addLinksToDb($key, $sqlManager);
+				addPaginationLinksToDb($key, $sqlManager);
 			}
 		}
 		else
 		{
 			addPaginationLinksToDb($select['links'], $sqlManager);
 		}
+
 		
 		$data = array(
 		'statecheck' => '2',
@@ -91,12 +92,14 @@ do {
 		->setData($data);
 
 		$update = $sqlManager->update($sqlBuilder);
+		exit;
 	} while ($select);
 
 
 // functia verifica daca linkul are paginatie (si il adauga in baza de date)
-function isCategory($stringToCheck, $sqlManager)
+function isCategory($stringToCheck)
 {
+	sleep(4);
 	$dom = HtmlDomParser::file_get_html( $stringToCheck );
 	if($dom->find('div#products-holder'))
 	{
@@ -106,14 +109,14 @@ function isCategory($stringToCheck, $sqlManager)
 
 
 // functia verifica daca linkul este o categorie si extrage elementele linkuri 
-function checkCategory($stringToCheck, $sqlManager)
+function checkCategory($stringToCheck)
 {	
 	sleep(5);
-
 	$dom = HtmlDomParser::file_get_html( $stringToCheck );
 	foreach($dom->find('span.category-sidebar') as $elements)
 	{
-		foreach ($elements->find('a') as $element) {
+		foreach ($elements->find('a') as $element) 
+		{
             $newlink = checkUrl($element->href);
             if($newlink)
             {
@@ -135,4 +138,38 @@ function addPaginationLinksToDb($links, $sqlManager)
 	->setData($data);
 
 	$update = $sqlManager->insert($sqlBuilder);
+}
+
+function checkUrl($link)
+{
+	if((substr($link, 0, 18) == "http://www.emag.ro")) 
+	{
+	   return $link;
+	}
+	else if(substr($link, 0, 14) == "http://emag.ro")
+	{
+		return $link;
+	}
+	else if((substr($link, 0, 18) !== "http://www.emag.ro") || (substr($link, 0, 18) !== "http://emag.ro"))
+	{
+		if(
+			   (substr($link, 0, 10) === "javascript") 
+			|| (substr($link, 0, 7) === "http://")
+			|| (strpos($link, 'microsoft') !== false) 
+			|| (strpos($link, 'google') !== false) 
+			|| (strpos($link, 'mozilla') !== false)
+			|| (strpos($link, 'https') !== false) 
+				)
+		{
+			return false;
+		}
+		else if(substr($link, 0, 1) == "/")
+		{
+			return ("http://www.emag.ro".$link);
+		}
+		else
+		{
+			return ("http://www.emag.ro/".$link);
+		}
+	}
 }
