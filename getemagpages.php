@@ -2,6 +2,7 @@
 require 'init.php';
 use Sunra\PhpSimple\HtmlDomParser;
 
+/*
 // este parsata prima pagina si se extrag linkurile din navbar-ul main page
 $dom = HtmlDomParser::file_get_html( "http://emag.ro" );
 foreach($dom->find('nav#emg-mega-menu') as $elements)
@@ -21,7 +22,6 @@ foreach ($links as $key => $value)
 	addLinksFromHomepageToDb($key, $sqlManager);
 }
 
-
 // linkurile extrase din navbar-ul main page sunt inserate in tabela
 function addLinksFromHomepageToDb($url, $sqlManager)
 {
@@ -36,6 +36,7 @@ function addLinksFromHomepageToDb($url, $sqlManager)
 
 	$result = $sqlManager->insert($sqlBuilder);
 }
+*/
 
 
 do {
@@ -70,14 +71,15 @@ do {
 			$hasPagination = checkCategory($select['links']);
 			foreach ($hasPagination as $key => $value) 
 			{
+				print_r($key);
 				addPaginationLinksToDb($key, $sqlManager);
 			}
 		}
 		else
 		{
+			print_r($select['links']);
 			addPaginationLinksToDb($select['links'], $sqlManager);
 		}
-
 		
 		$data = array(
 		'statecheck' => '2',
@@ -92,7 +94,6 @@ do {
 		->setData($data);
 
 		$update = $sqlManager->update($sqlBuilder);
-		exit;
 	} while ($select);
 
 
@@ -112,12 +113,13 @@ function isCategory($stringToCheck)
 function checkCategory($stringToCheck)
 {	
 	sleep(5);
+	$links = [];
 	$dom = HtmlDomParser::file_get_html( $stringToCheck );
 	foreach($dom->find('span.category-sidebar') as $elements)
 	{
 		foreach ($elements->find('a') as $element) 
 		{
-            $newlink = cutUrl(checkUrl($element->href));
+            $newlink = (checkUrl($element->href));
             if($newlink)
             {
                 $links[$newlink] = true;

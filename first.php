@@ -9,12 +9,13 @@ $tests =
 	'http://www.emag.ro/laptopuri-accesorii/l',
 ];
 
-foreach ($tests as $test) {
-	# code...
-	print_r(checkCategory($test));
-}
+// foreach ($tests as $test) {
+// 	# code...
+// 	checkCategory($test);
+// 	print_r($test);
+// }
 
-//print_r(checkCategory('http://www.emag.ro/petshop/l'));
+print_r(checkCategory('http://www.emag.ro/petshop/l'));
 
 function checkCategory($stringToCheck)
 {	
@@ -24,7 +25,7 @@ function checkCategory($stringToCheck)
 	{
 		foreach ($elements->find('a') as $element) 
 		{
-            $newlink = checkUrl($element->href);
+            $newlink = ($element->href);
             if($newlink)
             {
                 $links[$newlink] = true;
@@ -38,24 +39,22 @@ function checkCategory($stringToCheck)
 
 function checkUrl($link)
 {
+
+	$link = substr($link, 0, strpos($link, '?'));
 	if((substr($link, 0, 18) == "http://www.emag.ro")) 
 	{
 	   return $link;
 	}
-	else if(substr($link, 0, 14) == "http://emag.ro")
+	else if((substr($link, 0, 18) !== "http://www.emag.ro"))
 	{
-		return $link;
-	}
-	else if((substr($link, 0, 18) !== "http://www.emag.ro") || (substr($link, 0, 18) !== "http://emag.ro"))
-	{
-		if(
-			   (substr($link, 0, 10) === "javascript") 
-			|| (substr($link, 0, 7) === "http://")
-			|| (strpos($link, 'microsoft') !== false) 
+		if
+			(
+			   (substr($link, 0, 7) === "http://")
+			|| (strpos($link, 'javascript') !== false) 
 			|| (strpos($link, 'google') !== false) 
 			|| (strpos($link, 'mozilla') !== false)
 			|| (strpos($link, 'https') !== false) 
-				)
+			)
 		{
 			return false;
 		}
