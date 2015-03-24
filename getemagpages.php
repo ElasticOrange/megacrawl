@@ -8,7 +8,7 @@ foreach($dom->find('nav#emg-mega-menu') as $elements)
 {
 	foreach ($elements->find('a') as $element) 
 	{
-        $newlink = checkUrl($element->href);
+        $newlink = cutUrl(checkUrl($element->href));
         if($newlink)
         {
             $links[$newlink] = true;
@@ -117,7 +117,7 @@ function checkCategory($stringToCheck)
 	{
 		foreach ($elements->find('a') as $element) 
 		{
-            $newlink = checkUrl($element->href);
+            $newlink = cutUrl(checkUrl($element->href));
             if($newlink)
             {
                 $links[$newlink] = true;
@@ -138,6 +138,12 @@ function addPaginationLinksToDb($links, $sqlManager)
 	->setData($data);
 
 	$update = $sqlManager->insert($sqlBuilder);
+}
+
+function cutUrl($link)
+{
+	$link = substr($link, 0, strpos($link, '?ref'));
+	return $link;
 }
 
 function checkUrl($link)
