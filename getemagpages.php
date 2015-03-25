@@ -132,14 +132,20 @@ function checkCategory($stringToCheck)
 // functia face adaugarea linkurilor cu paginatie in baza de date 'paginiproduse'
 function addPaginationLinksToDb($links, $sqlManager)
 {
-	$data = array(
-			'pagina' => $links,
-		);
-	$sqlBuilder = (new \Simplon\Mysql\Manager\SqlQueryBuilder())
-	->setTableName('paginiproduse')
-	->setData($data);
+	try {
+		$data = array(
+				'pagina' => $links,
+			);
+		$sqlBuilder = (new \Simplon\Mysql\Manager\SqlQueryBuilder())
+		->setTableName('paginiproduse')
+		->setData($data);
 
-	$update = $sqlManager->insert($sqlBuilder);
+		$update = $sqlManager->insert($sqlBuilder);
+	} catch (Simplon\Mysql\MysqlException $e)
+	{
+		echo "am prins eroarea";
+		//throw new MysqlException($e->getMessage(), $e->getCode());
+	}
 }
 
 function cutUrl($link)
